@@ -21,16 +21,26 @@ Screen::Screen(bool fullscreen, unsigned int width, unsigned int height)
         SDL_WINDOW_SHOWN | (fullscreen? SDL_WINDOW_FULLSCREEN_DESKTOP : 0)
     );
 
-    SDL_GetWindowSizeInPixels(window, &this->width, &this->height);
+    SDL_GetWindowSizeInPixels(this->window, &this->width, &this->height);
     std::cout << "w: " << this->width << " \th: " << this->height << "\n";
 
-    if (window == NULL) {
+    if (this->window == NULL) {
         std::cerr << "SDL cannot create window: " << SDL_GetError() << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    this->renderer = SDL_CreateRenderer(this->window, -1, SDL_RENDERER_ACCELERATED);
+    if (this->renderer == NULL) {
+        std::cerr << "SDL cannot create renderer: " << SDL_GetError() << std::endl;
         exit(EXIT_FAILURE);
     }
 }
 
 void Screen::close() {
+    //Destroy renderer  
+    SDL_DestroyRenderer(this->renderer);
+    renderer = NULL;
+
     //Destroy window  
     SDL_DestroyWindow(this->window);
     window = NULL;
@@ -39,14 +49,16 @@ void Screen::close() {
     SDL_Quit();
 }
 
-SDL_Window* Screen::get_window() {
+SDL_Window* Screen::get_window() const {
     return this->window;
 }
-
-void Screen::render() {
+SDL_Renderer* Screen::get_renderer() const {
+    return this->renderer;
 }
+
 void Screen::update() {
-    SDL_GL_SwapWindow(this->window);
+    SDL_RenderPresent(this->renderer);
+    SDL_RenderClear(this->renderer);
 }
 
 #endif

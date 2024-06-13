@@ -6,6 +6,10 @@ link_directories(SDL2-2.28.5/lib/x64)
 
 add_executable(${PROJECT_NAME} main.cpp
     class/utility/graphics/screen.cpp
+    class/utility/graphics/sprite.cpp
+    class/utility/graphics/sprite_renderer.cpp
+    
+    class/utility/math/vector2.cpp
     class/utility/math/vector3.cpp
 )
 

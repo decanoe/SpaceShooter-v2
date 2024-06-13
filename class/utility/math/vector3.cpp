@@ -8,25 +8,20 @@ Vector3::Vector3(float x, float y, float z){
     this->y = y;
     this->z = z;
 }
-Vector3::Vector3(const Vector3Int& other){
-    this->x = other.x;
-    this->y = other.y;
-    this->z = other.z;
-}
 Vector3::Vector3(){
     this->x = 0;
     this->y = 0;
     this->z = 0;
 }
 
-Vector3Int Vector3::round() {
+Vector3Int Vector3::round() const {
     return Vector3Int(
         roundf(this->x),
         roundf(this->y),
         roundf(this->z)
     );
 }
-Vector3Int Vector3::floor() {
+Vector3Int Vector3::floor() const {
     return Vector3Int(
         floorf(this->x),
         floorf(this->y),
@@ -34,7 +29,7 @@ Vector3Int Vector3::floor() {
     );
 }
 
-Vector3 Vector3::operator+(const Vector3& other){
+Vector3 Vector3::operator+(const Vector3& other) const {
     return Vector3(
         this->x + other.x,
         this->y + other.y,
@@ -48,7 +43,7 @@ Vector3& Vector3::operator+=(const Vector3& other){
     return *this;
 }
 
-Vector3 Vector3::operator-(const Vector3& other){
+Vector3 Vector3::operator-(const Vector3& other) const {
     return Vector3(
         this->x - other.x,
         this->y - other.y,
@@ -63,7 +58,7 @@ Vector3& Vector3::operator-=(const Vector3& other){
 }
 
 // per component multiplication
-Vector3 Vector3::operator*(const Vector3& other){
+Vector3 Vector3::operator*(const Vector3& other) const {
     return Vector3(
         this->x * other.x,
         this->y * other.y,
@@ -77,7 +72,7 @@ Vector3& Vector3::operator*=(const Vector3& other){
     this->z *= other.z;
     return *this;
 }
-Vector3 Vector3::operator*(float scalar){
+Vector3 Vector3::operator*(float scalar) const {
     return Vector3(
         this->x * scalar,
         this->y * scalar,
@@ -92,7 +87,7 @@ Vector3& Vector3::operator*=(float scalar){
 }
 
 // per component division
-Vector3 Vector3::operator/(const Vector3& other){
+Vector3 Vector3::operator/(const Vector3& other) const {
     return Vector3(
         this->x / other.x,
         this->y / other.y,
@@ -106,7 +101,7 @@ Vector3& Vector3::operator/=(const Vector3& other){
     this->z /= other.z;
     return *this;
 }
-Vector3 Vector3::operator/(float scalar){
+Vector3 Vector3::operator/(float scalar) const {
     return Vector3(
         this->x / scalar,
         this->y / scalar,
@@ -121,7 +116,7 @@ Vector3& Vector3::operator/=(float scalar){
 }
 
 // per component mod
-Vector3 Vector3::operator%(float scalar) {
+Vector3 Vector3::operator%(float scalar) const {
     return Vector3(
         this->x - floorf(this->x / scalar) * scalar,
         this->y - floorf(this->y / scalar) * scalar,
@@ -153,15 +148,15 @@ float& Vector3::operator[](int index){
         exit(1);
     }
 }
-bool Vector3::operator==(const Vector3& other){
+bool Vector3::operator==(const Vector3& other) const {
     return this->x == other.x && this->y == other.y && this->z == other.z;
 }
-bool Vector3::operator!=(const Vector3& other){
+bool Vector3::operator!=(const Vector3& other) const {
     return this->x != other.x || this->y != other.y || this->z != other.z;
 }
 
 // return a vector othogonal to the two vectors
-Vector3 Vector3::cross(const Vector3& other){
+Vector3 Vector3::cross(const Vector3& other) const {
     return Vector3(
         this->y * other.z - this->z * other.y,
         this->z * other.x - this->x * other.z,
@@ -169,15 +164,15 @@ Vector3 Vector3::cross(const Vector3& other){
     );
 }
 // return the dot product of the two vectors
-float Vector3::dot(const Vector3& other){
+float Vector3::dot(const Vector3& other) const {
     return this->x * other.x + this->y * other.y + this->z * other.z;
 }
 // return the length of the vector
-float Vector3::magnitude(){
+float Vector3::magnitude() const {
     return sqrtf(this->sqrmagnitude());
 }
 // return the squared length of the vector
-float Vector3::sqrmagnitude(){
+float Vector3::sqrmagnitude() const {
     return this->x * this->x + this->y * this->y + this->z * this->z;
 }
 // normalize the vector in place and return itself
@@ -186,12 +181,12 @@ Vector3& Vector3::normalize(){
     return *this;
 }
 // return a new vector with same direction and a norm of 1
-Vector3 Vector3::normalized(){
+Vector3 Vector3::normalized() const {
     return *this / this->magnitude();
 }
 
-std::string Vector3::to_str() {
-    return "(" + std::to_string(this->x) + ", " + std::to_string(this->y) + ", " + std::to_string(this->z) + ")";
+std::string Vector3::to_str() const {
+    return "Vector3(" + std::to_string(this->x) + ", " + std::to_string(this->y) + ", " + std::to_string(this->z) + ")";
 }
 #pragma endregion
 
@@ -202,18 +197,13 @@ Vector3Int::Vector3Int(int x, int y, int z){
     this->y = y;
     this->z = z;
 }
-Vector3Int::Vector3Int(const Vector3& other){
-    this->x = (int)other.x;
-    this->y = (int)other.y;
-    this->z = (int)other.z;
-}
 Vector3Int::Vector3Int(){
     this->x = 0;
     this->y = 0;
     this->z = 0;
 }
 
-Vector3Int Vector3Int::operator+(const Vector3& other){
+Vector3Int Vector3Int::operator+(const Vector3& other) const {
     return Vector3Int(
         this->x + other.x,
         this->y + other.y,
@@ -227,7 +217,7 @@ Vector3Int& Vector3Int::operator+=(const Vector3& other){
     return *this;
 }
 
-Vector3Int Vector3Int::operator-(const Vector3& other){
+Vector3Int Vector3Int::operator-(const Vector3& other) const {
     return Vector3Int(
         this->x - other.x,
         this->y - other.y,
@@ -242,7 +232,7 @@ Vector3Int& Vector3Int::operator-=(const Vector3& other){
 }
 
 // per component multiplication
-Vector3Int Vector3Int::operator*(const Vector3& other){
+Vector3Int Vector3Int::operator*(const Vector3& other) const {
     return Vector3Int(
         this->x * other.x,
         this->y * other.y,
@@ -256,12 +246,12 @@ Vector3Int& Vector3Int::operator*=(const Vector3& other){
     this->z *= other.z;
     return *this;
 }
-Vector3Int Vector3Int::operator*(float scalar){
+Vector3Int Vector3Int::operator*(float scalar) const {
     return Vector3(
         this->x * scalar,
         this->y * scalar,
         this->z * scalar
-    );
+    ).round();
 }
 Vector3Int& Vector3Int::operator*=(float scalar){
     this->x *= scalar;
@@ -271,7 +261,7 @@ Vector3Int& Vector3Int::operator*=(float scalar){
 }
 
 // per component division
-Vector3Int Vector3Int::operator/(const Vector3& other){
+Vector3Int Vector3Int::operator/(const Vector3& other) const {
     return Vector3Int(
         this->x / other.x,
         this->y / other.y,
@@ -285,7 +275,7 @@ Vector3Int& Vector3Int::operator/=(const Vector3& other){
     this->z /= other.z;
     return *this;
 }
-Vector3Int Vector3Int::operator/(float scalar){
+Vector3Int Vector3Int::operator/(float scalar) const {
     return Vector3Int(
         this->x / scalar,
         this->y / scalar,
@@ -300,7 +290,7 @@ Vector3Int& Vector3Int::operator/=(float scalar){
 }
 
 // per component mod
-Vector3Int Vector3Int::operator%(int scalar) {
+Vector3Int Vector3Int::operator%(int scalar) const {
     return Vector3Int(
         this->x % scalar,
         this->y % scalar,
@@ -328,32 +318,32 @@ int& Vector3Int::operator[](int index){
         return this->z;
     
     default:
-        std::cerr << "ERROR: trying to acces component " << index << " of a Vector3\n";
+        std::cerr << "ERROR: trying to acces component " << index << " of a Vector3Int\n";
         exit(1);
     }
 }
-bool Vector3Int::operator==(const Vector3Int& other){
+bool Vector3Int::operator==(const Vector3Int& other) const {
     return this->x == other.x && this->y == other.y && this->z == other.z;
 }
-bool Vector3Int::operator!=(const Vector3Int& other){
+bool Vector3Int::operator!=(const Vector3Int& other) const {
     return this->x != other.x || this->y != other.y || this->z != other.z;
 }
 
 // return the dot product of the two vectors
-float Vector3Int::dot(const Vector3& other){
+float Vector3Int::dot(const Vector3& other) const {
     return this->x * other.x + this->y * other.y + this->z * other.z;
 }
 // return the length of the vector
-float Vector3Int::magnitude(){
+float Vector3Int::magnitude() const {
     return sqrt(this->sqrmagnitude());
 }
 // return the squared length of the vector
-float Vector3Int::sqrmagnitude(){
+float Vector3Int::sqrmagnitude() const {
     return this->x * this->x + this->y * this->y + this->z * this->z;
 }
 
-std::string Vector3Int::to_str() {
-    return "(" + std::to_string(this->x) + ", " + std::to_string(this->y) + ", " + std::to_string(this->z) + ")";
+std::string Vector3Int::to_str() const {
+    return "Vector3Int(" + std::to_string(this->x) + ", " + std::to_string(this->y) + ", " + std::to_string(this->z) + ")";
 }
 #pragma endregion
 

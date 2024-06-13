@@ -22,7 +22,6 @@ Screen::Screen(bool fullscreen, unsigned int width, unsigned int height)
     );
 
     SDL_GetWindowSizeInPixels(this->window, &this->width, &this->height);
-    std::cout << "w: " << this->width << " \th: " << this->height << "\n";
 
     if (this->window == NULL) {
         std::cerr << "SDL cannot create window: " << SDL_GetError() << std::endl;
@@ -58,7 +57,6 @@ SDL_Renderer* Screen::get_renderer() const {
 
 void Screen::update() {
     SDL_RenderPresent(this->renderer);
-    SDL_RenderClear(this->renderer);
 }
 
 #endif

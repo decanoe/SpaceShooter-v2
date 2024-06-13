@@ -7,9 +7,15 @@ Sprite::~Sprite() {
     if (this->texture != NULL) SDL_DestroyTexture(this->texture);
     this->texture = NULL;
 }
-Sprite Sprite::from_file(std::string path, SDL_Renderer* renderer) {
+Sprite Sprite::from_file(const char* path, SDL_Renderer* renderer) {
     Sprite sprite;
-    // sprite.texture = IMG_LoadTexture(renderer, "FILE");
+
+    sprite.texture = IMG_LoadTexture(renderer, path);
+    if (sprite.texture == NULL) {
+        std::cerr << "cannot convert surface to texture from path \"" << path << "\": " << SDL_GetError() << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
     return sprite;
 }
 

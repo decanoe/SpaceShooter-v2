@@ -2,9 +2,15 @@
 #define SDL_MAIN_HANDLED
 #include <chrono>
 #include "class/utility/graphics/screen.h"
+#include "class/utility/graphics/sprite_renderer.h"
 
 int main(int argc, char *args[]) {
     Screen screen = Screen(true);
+
+    Sprite sprite = Sprite::from_file("ImphenziaPalette01.png", screen.get_renderer());
+    int w = -1, h = -1;
+    sprite.get_size(&w, &h);
+    std::cout << "size: " << w << ", " << h << "\n";
 
     bool loop = true;
     float deltatime = 0.001;
@@ -30,7 +36,8 @@ int main(int argc, char *args[]) {
             }
         }
         
-        screen.render();
+        SDL_RenderClear(screen.get_renderer());
+        sprite.blit(screen.get_renderer(), Vector2Int(10, 10));
         screen.update();
 
         auto end = std::chrono::system_clock::now();

@@ -18,6 +18,8 @@ public:
 
     Vector2Int round() const;
     Vector2Int floor() const;
+    // return a vector which goes in the closest cardinal direction (right by default)
+    Vector2 flat() const;
 
     Vector2 operator+(const Vector2& other) const;
     Vector2& operator+=(const Vector2& other);
@@ -52,8 +54,6 @@ public:
 
     // return a vector othogonal to this vector
     Vector2 cross() const;
-    // return a vector equals to this vector rotated by an angle <angle> in radians
-    Vector2 rotate(float angle) const;
     // return the dot product of the two vectors
     float dot(const Vector2& other) const;
     // return the length of the vector
@@ -64,6 +64,23 @@ public:
     Vector2& normalize();
     // return a new vector with same direction and a norm of 1
     Vector2 normalized() const;
+
+    // return a vector matching an angle (in radian)
+    // 0 rad => right
+    static Vector2 from_angle(float angle);
+    // return the reflection of the vector on a surface of normal given
+    Vector2 reflect(const Vector2& normal) const;
+    // return a vector equals to this vector rotated by an angle <angle> in radians
+    Vector2 rotate(float angle) const;
+    // return the signed angle between 2 vectors
+    float signed_angle(const Vector2& other) const;
+    
+    // return the vector with positive y as newUp
+    Vector2 change_base(const Vector2& newUp) const;
+    // return the vector with x between maxX and minX and y between maxY and minY
+    Vector2 clamp(float maxX = 1, float maxY = 1, float minX = -1, float minY = -1) const;
+    // return the interpolation of v1 and v2 with value
+    static Vector2 Lerp(const Vector2& v1, const Vector2& v2, float value);
 
     std::string to_str() const;
 };

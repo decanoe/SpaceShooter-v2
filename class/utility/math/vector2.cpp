@@ -25,6 +25,15 @@ Vector2Int Vector2::floor() const {
     );
 }
 
+// return a vector which goes in the closest cardinal direction (right by default)
+Vector2 Vector2::flat() const {
+    if (this->x == 0 && this->y == 0) return Vector2(1, 0);
+    
+    if (abs(this->x) >= abs(this->y)) return Vector2(this->x / abs(this->x), 0);
+
+    return Vector2(0, this->y / abs(this->y));
+}
+
 Vector2 Vector2::operator+(const Vector2& other) const {
     return Vector2(
         this->x + other.x,
@@ -159,6 +168,42 @@ Vector2& Vector2::normalize(){
 // return a new vector with same direction and a norm of 1
 Vector2 Vector2::normalized() const {
     return *this / this->magnitude();
+}
+
+
+// return a vector matching an angle (in radian)
+// 0 rad => right
+Vector2 Vector2::from_angle(float angle) {
+    return Vector2(std::cos(angle), -std::sin(angle));
+}
+// return the reflection of the vector on a surface of normal given
+Vector2 Vector2::reflect(const Vector2& normal) const {
+    return *this - normal.normalized() * 2 * this->dot(normal.normalized());
+}
+// return a vector equals to this vector rotated by an angle <angle> in radians
+Vector2 Vector2::rotate(float angle) const {
+    return Vector2(
+        this->x * std::cos(angle) - this->y * std::sin(angle),
+        this->x * std::sin(angle) + this->y * std::cos(angle)
+    );
+}
+// return the signed angle between 2 vectors
+float Vector2::signed_angle(const Vector2& other) const {
+    return std::atan2(other.y * this->x - other.x * this->y, other.x * this->x + other.y * this->y);
+}
+
+// return the vector with positive y as newUp
+Vector2 Vector2::change_base(const Vector2& newUp) const {
+    Vector2 newRight = newUp.cross();
+    return Vector2(this->x * newRight.x + this->y * newRight.y, this->x * newUp.x + this->y * newUp.y);
+}
+// return the vector with x between maxX and minX and y between maxY and minY
+Vector2 Vector2::clamp(float maxX, float maxY, float minX, float minY) const {
+    return Vector2(__max(minX, __min(maxX, this->x)), __max(minY, __min(maxY, this->y)));
+}
+// return the interpolation of v1 and v2 with value
+Vector2 Vector2::Lerp(const Vector2& v1, const Vector2& v2, float value) {
+    return v1 + (v2 - v1) * value;
 }
 
 std::string Vector2::to_str() const {

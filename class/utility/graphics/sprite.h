@@ -7,15 +7,17 @@
 
 class Sprite
 {
-private:
+protected:
     SDL_Texture* texture = NULL;
+    Vector2Int offset;
+    Vector2Int size;
 public:
     Sprite();
     ~Sprite();
-    static Sprite from_file(const char* path, SDL_Renderer* renderer);
+    static Sprite from_file(const char* path, SDL_Renderer* renderer, Vector2Int offset = Vector2Int(), Vector2Int size = Vector2Int());
 
     void blit(SDL_Renderer* renderer, Vector2Int position) const;
-    void get_size(int* width = nullptr, int* height = nullptr) const;
+    Vector2Int get_size() const;
 };
 
 #endif

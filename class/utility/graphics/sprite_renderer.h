@@ -4,19 +4,19 @@
 #include "SDL.h"
 #include "./screen.h"
 #include "./sprite.h"
-#include "./updatable.h"
+#include "./graphic_object.h"
 #include "../math/vector2.h"
 
-class SpriteRenderer: Updatable
+class SpriteRenderer: GraphicObject
 {
-private:
+protected:
     Vector2 position;
     Sprite sprite;
 public:
     SpriteRenderer(Vector2 position);
     ~SpriteRenderer();
 
-    void update(const Screen & screen) const;
+    void update(const Screen & screen) const override;
 };
 
 #endif

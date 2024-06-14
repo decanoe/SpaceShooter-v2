@@ -1,13 +1,14 @@
 #ifndef _SPRITE_CLASS
 
 #include "./sprite.h"
+#include "../math/rect.h"
 
 Sprite::Sprite() {}
 Sprite::~Sprite() {
     if (this->texture != NULL) SDL_DestroyTexture(this->texture);
     this->texture = NULL;
 }
-Sprite Sprite::from_file(const char* path, SDL_Renderer* renderer) {
+Sprite Sprite::from_file(const char* path, SDL_Renderer* renderer, Vector2Int offset, Vector2Int size) {
     Sprite sprite;
 
     sprite.texture = IMG_LoadTexture(renderer, path);
@@ -16,22 +17,20 @@ Sprite Sprite::from_file(const char* path, SDL_Renderer* renderer) {
         exit(EXIT_FAILURE);
     }
 
+    sprite.offset = offset;
+    sprite.size = size;
+    if (sprite.size == Vector2Int()) SDL_QueryTexture(sprite.texture, NULL, NULL, &sprite.size.x, &sprite.size.y);
+
     return sprite;
 }
 
 void Sprite::blit(SDL_Renderer* renderer, Vector2Int position) const {
     if (this->texture == NULL) return;
 
-    SDL_Rect texture_rect;
-    texture_rect.x = position.x;
-    texture_rect.y = position.y;
-    this->get_size(&texture_rect.w, &texture_rect.h);
-
-    SDL_RenderCopy(renderer, this->texture, NULL, &texture_rect); 
+    SDL_RenderCopy(renderer, this->texture, &Rect(this->offset, this->size).to_sdl_rect(), &Rect(position, this->size).to_sdl_rect());
 }
-void Sprite::get_size(int* width, int* height) const {
-    if (this->texture == NULL) return;
-    SDL_QueryTexture(this->texture, NULL, NULL, (width == nullptr? NULL : width), (height == nullptr? NULL : height));
+Vector2Int Sprite::get_size() const {
+    return this->size;
 }
 
 #endif

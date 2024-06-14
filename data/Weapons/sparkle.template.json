@@ -1,0 +1,21 @@
+{
+    "cooldown": 0.25, 
+    "barrel_offset": [7, -7],
+
+    "animation_position_color": [0, 6],
+    "from_color": [],
+    "animation_length": 6,
+    "animation_start": 0,
+    "animation_end": 1,
+
+    "projectile":
+    {
+        "speed": 5,
+        "strength": 6,
+
+        "animation_position_color": [0, 0],
+        "from_color": [],
+        "animation_position_NoneColor": [0, 0],
+        "animation_length": 1
+    }
+}

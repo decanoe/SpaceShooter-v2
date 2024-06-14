@@ -7,10 +7,8 @@
 int main(int argc, char *args[]) {
     Screen screen = Screen(true);
 
-    Sprite sprite = Sprite::from_file("ImphenziaPalette01.png", screen.get_renderer());
-    int w = -1, h = -1;
-    sprite.get_size(&w, &h);
-    std::cout << "size: " << w << ", " << h << "\n";
+    Sprite sprite = Sprite::from_file("sprites/Ship - parts.png", screen.get_renderer(), Vector2Int(), Vector2Int());
+    std::cout << "size: " << sprite.get_size().to_str() << "\n";
 
     bool loop = true;
     float deltatime = 0.001;

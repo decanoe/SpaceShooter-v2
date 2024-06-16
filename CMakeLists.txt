@@ -6,6 +6,8 @@ link_directories(SDL2-2.28.5/lib/x64)
 include_directories(SDL_image)
 link_directories(SDL_image/lib/x64)
 
+add_compile_definitions(_DEBUG_PRINTS)
+
 add_executable(${PROJECT_NAME} main.cpp
     class/utility/graphics/screen.cpp
     class/utility/graphics/sprite.cpp
@@ -13,6 +15,18 @@ add_executable(${PROJECT_NAME} main.cpp
     
     class/utility/math/vector2.cpp
     class/utility/math/vector3.cpp
+    class/utility/math/rect.cpp
+
+    class/utility/physics/transform.cpp
+    class/utility/physics/rigid_object.cpp
+    class/utility/physics/rect_collider.cpp
+
+    
+    
+    class/gameplay/general/world.cpp
+    class/gameplay/general/graphics.cpp
+    
+    class/gameplay/ship/test_ship.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} SDL2 SDL2_image)

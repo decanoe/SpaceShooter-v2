@@ -1,6 +1,10 @@
 #ifndef _VECTOR3_CLASS
 #define _VECTOR3_CLASS
 
+#ifndef PI
+#define PI 3.14159265359
+#endif
+
 #include <iostream>
 #include <string>
 #include <cmath>
@@ -15,6 +19,7 @@ public:
     
     Vector3();
     Vector3(float x, float y, float z);
+    Vector3(const Vector3Int& other);
 
     Vector3Int round() const;
     Vector3Int floor() const;
@@ -74,6 +79,7 @@ public:
     
     Vector3Int();
     Vector3Int(int x, int y, int z);
+    Vector3Int(const Vector3& other);
 
     Vector3Int operator+(const Vector3& other) const;
     Vector3Int& operator+=(const Vector3& other);

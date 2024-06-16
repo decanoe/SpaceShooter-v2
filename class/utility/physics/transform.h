@@ -5,13 +5,18 @@
 
 class Transform
 {
+private:
+    static unsigned int ID_COUNT;
 public:
-    Vector2 position;
-    float angle;
-    Vector2 size;
-    Transform();
-    ~Transform();
-};
+    std::string name = "unnamed transform n";
+    Vector2 position = Vector2();
+    float angle = 0;
+    Vector2 size = Vector2(1, 1);
 
+    Transform();
+    ~Transform() {}
+
+    std::string to_str() const;
+};
 
 #endif

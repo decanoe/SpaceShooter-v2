@@ -4,20 +4,28 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #include "../math/vector2.h"
+#include "../../gameplay/general/graphics.h"
 
 class Sprite
 {
 protected:
+    SDL_Surface* surface = NULL;
     SDL_Texture* texture = NULL;
-    Vector2Int offset;
-    Vector2Int size;
+    Vector2Int size = Vector2Int();
 public:
-    Sprite();
-    ~Sprite();
-    static Sprite from_file(const char* path, SDL_Renderer* renderer, Vector2Int offset = Vector2Int(), Vector2Int size = Vector2Int());
+    std::string name;
+    Sprite() {}
+    Sprite(const char* path, std::string name = "unnamed Sprite");
 
-    void blit(SDL_Renderer* renderer, Vector2Int position) const;
+    void update_texture();
+    void release();
+    static Sprite copy(const Sprite& other, Vector2Int offset = Vector2Int(), Vector2Int size = Vector2Int());
+
+    void blit(Vector2Int position, float angle = 0, SDL_RendererFlip flip = SDL_RendererFlip::SDL_FLIP_NONE) const;
     Vector2Int get_size() const;
+
+    bool is_sprite() const;
+    std::string to_str() const;
 };
 
 #endif

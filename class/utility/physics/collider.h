@@ -4,6 +4,9 @@
 #include "../math/vector2.h"
 #include "../math/rect.h"
 #include "./transform.h"
+#include "../graphics/object_renderer.h"
+
+#include "../../gameplay/general/world.h"
 
 struct CollideInfo
 {
@@ -13,15 +16,17 @@ struct CollideInfo
 };
 
 
-class Collider
+class Collider: public ObjectRenderer
 {
 protected:
-    Transform& transform;
+    Transform* transform = nullptr;
 public:
-    Collider(); // prevents Intellisense bug
+    Collider() {}
+    ~Collider() {}
 
-    virtual Rect bounding_box() const;
-    virtual CollideInfo collide(Collider col) const;
+    virtual Rect bounding_box() const { return Rect(); };
+    virtual CollideInfo collide(Collider col) const { return {false}; };
+    virtual std::string to_str() const { return "Collider(transform: \"" + this->transform->name + "\")"; };
 };
 
 #endif

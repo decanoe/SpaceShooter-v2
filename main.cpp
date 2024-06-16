@@ -1,14 +1,18 @@
 #include <iostream>
 #define SDL_MAIN_HANDLED
 #include <chrono>
-#include "class/utility/graphics/screen.h"
-#include "class/utility/graphics/sprite_renderer.h"
+
+#include "class/gameplay/ship/test_ship.h"
+#include "class/gameplay/general/graphics.h"
+#include "class/gameplay/general/world.h"
 
 int main(int argc, char *args[]) {
-    Screen screen = Screen(true);
-
-    Sprite sprite = Sprite::from_file("sprites/Ship - parts.png", screen.get_renderer(), Vector2Int(), Vector2Int());
-    std::cout << "size: " << sprite.get_size().to_str() << "\n";
+    TestShip* ship = new TestShip(Vector2(Graphics::screen.width / 2, Graphics::screen.height / 2));
+    ship->free_object = true;
+    World::object_renderers.push_back(&(ship->sprite_renderer));
+    World::object_renderers.push_back(&(ship->rect_collider));
+    World::update_list.push_back(ship);
+    World::world_center = ship;
 
     bool loop = true;
     float deltatime = 0.001;
@@ -17,6 +21,8 @@ int main(int argc, char *args[]) {
 
         SDL_Event e;
         while (SDL_PollEvent(&e)) {
+            ship->manage_event(e);
+
             switch (e.type)
             {
             case SDL_QUIT:
@@ -33,18 +39,22 @@ int main(int argc, char *args[]) {
                 break;
             }
         }
+        ship->manage_continuous_event();
         
-        SDL_RenderClear(screen.get_renderer());
-        sprite.blit(screen.get_renderer(), Vector2Int(10, 10));
-        screen.update();
+        World::update(deltatime);
+        World::render();
 
         auto end = std::chrono::system_clock::now();
         std::chrono::duration<double> elapsed_time = end-start;
         double elapsed_seconds = elapsed_time.count();
         deltatime = elapsed_seconds;
+
+        std::cout << "fps: " << (1/deltatime) << "\r";
     }
 
-    screen.close();
+    World::release();
+    Graphics::sprite_sheet.release();
+    Graphics::screen.close();
 
     SDL_Quit();
     return 0;

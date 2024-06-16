@@ -13,6 +13,11 @@ Vector3::Vector3(){
     this->y = 0;
     this->z = 0;
 }
+Vector3::Vector3(const Vector3Int& other) {
+    this->x = other.x;
+    this->y = other.y;
+    this->z = other.z;
+}
 
 Vector3Int Vector3::round() const {
     return Vector3Int(
@@ -201,6 +206,11 @@ Vector3Int::Vector3Int(){
     this->x = 0;
     this->y = 0;
     this->z = 0;
+}
+Vector3Int::Vector3Int(const Vector3& other) {
+    this->x = (int)other.x;
+    this->y = (int)other.y;
+    this->z = (int)other.z;
 }
 
 Vector3Int Vector3Int::operator+(const Vector3& other) const {

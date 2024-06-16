@@ -4,19 +4,22 @@
 #include "SDL.h"
 #include "./screen.h"
 #include "./sprite.h"
-#include "./graphic_object.h"
+#include "./object_renderer.h"
 #include "../math/vector2.h"
+#include "../physics/transform.h"
 
-class SpriteRenderer: GraphicObject
+class SpriteRenderer: public ObjectRenderer
 {
 protected:
-    Vector2 position;
+    Transform* transform;
     Sprite sprite;
 public:
-    SpriteRenderer(Vector2 position);
-    ~SpriteRenderer();
+    SpriteRenderer(Transform* transform, Sprite sprite);
+    SpriteRenderer() {}
+    void release() override;
 
-    void update(const Screen & screen) const override;
+    void draw() const override;
+    std::string to_str() const override;
 };
 
 #endif

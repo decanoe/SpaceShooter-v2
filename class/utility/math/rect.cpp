@@ -2,6 +2,7 @@
 
 #include "./rect.h"
 
+Rect::Rect() {};
 Rect::Rect(float x, float y, float width, float height) {
     this->x = x;
     this->y = y;
@@ -20,7 +21,22 @@ Rect::Rect(Vector2Int position, Vector2Int size) {
     this->width = size.x;
     this->height = size.y;
 }
+Rect::Rect(float width, float height) {
+    this->x = 0;
+    this->y = 0;
+    this->width = width;
+    this->height = height;
+}
+Rect::Rect(Vector2 size) {
+    this->x = 0;
+    this->y = 0;
+    this->width = size.x;
+    this->height = size.y;
+}
 
+Rect Rect::recenter(Vector2 new_center) const {
+    return Rect(new_center.x - this->width / 2, new_center.y - this->height / 2, this->width, this->height);
+}
 Rect Rect::offset(Vector2 offset) const {
     return Rect(this->x + offset.x, this->y + offset.y, this->width, this->height);
 }
@@ -31,12 +47,14 @@ Rect Rect::expand_on_rotation(float angle) const {
     C-------D
     */
 
-   Vector2 A = this->position().rotate(angle);
-   Vector2 B = Vector2(this->x + this->width, this->y).rotate(angle);
-   Vector2 C = Vector2(this->x, this->y + this->height).rotate(angle);
-   Vector2 D = Vector2(this->x + this->width, this->y + this->height).rotate(angle);
+   Vector2 center = this->center();
 
-   return Rect().grow_to_fit(A).grow_to_fit(B).grow_to_fit(C).grow_to_fit(D);
+   Vector2 A = center + (Vector2(-this->width, -this->height) / 2).rotate(angle);
+   Vector2 B = center + (Vector2( this->width, -this->height) / 2).rotate(angle);
+   Vector2 C = center + (Vector2(-this->width,  this->height) / 2).rotate(angle);
+   Vector2 D = center + (Vector2( this->width,  this->height) / 2).rotate(angle);
+
+   return Rect(center, Vector2()).grow_to_fit(A).grow_to_fit(B).grow_to_fit(C).grow_to_fit(D);
 }
 
 Vector2 Rect::position() const {
@@ -62,11 +80,17 @@ bool Rect::overlap(Rect rect) const {
         && this->y + this->height > rect.y;
 }
 Rect& Rect::grow_to_fit(Vector2 position) {
+    float x_w = this->x + this->width;
+    float y_h = this->y + this->height;
+
     this->x = __min(this->x, position.x);
     this->y = __min(this->y, position.y);
 
-    this->width = __max(this->width, position.x - this->x);
-    this->height = __max(this->height, position.y - this->y);
+    x_w = __max(x_w, position.x);
+    y_h = __max(y_h, position.y);
+
+    this->width = x_w - this->x;
+    this->height = y_h - this->y;
 
     return *this;
 }

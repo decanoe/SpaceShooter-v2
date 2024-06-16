@@ -1,6 +1,10 @@
 #ifndef _VECTOR2_CLASS
 #define _VECTOR2_CLASS
 
+#ifndef PI
+#define PI 3.14159265359
+#endif
+
 #include <iostream>
 #include <string>
 #include <cmath>
@@ -15,6 +19,7 @@ public:
     
     Vector2();
     Vector2(float x, float y);
+    Vector2(const Vector2Int& other);
 
     Vector2Int round() const;
     Vector2Int floor() const;
@@ -93,6 +98,7 @@ public:
     
     Vector2Int();
     Vector2Int(int x, int y);
+    Vector2Int(const Vector2& other);
 
     Vector2Int operator+(const Vector2& other) const;
     Vector2Int& operator+=(const Vector2& other);

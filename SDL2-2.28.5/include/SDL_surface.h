@@ -800,8 +800,14 @@ extern DECLSPEC int SDLCALL SDL_FillRect
 extern DECLSPEC int SDLCALL SDL_FillRects
     (SDL_Surface * dst, const SDL_Rect * rects, int count, Uint32 color);
 
-/* !!! FIXME: merge this documentation with the wiki */
 /**
+ * \param src the SDL_Surface structure that is the drawing source
+ * \param srcrect the SDL_Rect describing source position (or NULL)
+ * \param dst the SDL_Surface structure that is the drawing target
+ * \param dstrect the SDL_Rect describing target position (or NULL)
+ * 
+ * \attention int SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_Rect *dstrect)
+ * \brief
  *  Performs a fast blit from the source surface to the destination surface.
  *
  *  This assumes that the source and destination rectangles are

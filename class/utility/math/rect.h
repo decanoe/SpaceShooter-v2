@@ -18,7 +18,10 @@ public:
     Rect(float x, float y, float width, float height);
     Rect(Vector2 position, Vector2 size);
     Rect(Vector2Int position, Vector2Int size);
+    Rect(float width, float height);
+    Rect(Vector2 size);
 
+    Rect recenter(Vector2 new_center = Vector2()) const;
     Rect offset(Vector2 offset) const;
     Rect expand_on_rotation(float angle) const;
 

@@ -40,7 +40,7 @@ void Screen::close() {
     SDL_DestroyRenderer(this->renderer);
     renderer = NULL;
 
-    //Destroy window  
+    //Destroy window
     SDL_DestroyWindow(this->window);
     window = NULL;
 

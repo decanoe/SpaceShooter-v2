@@ -11,6 +11,10 @@ Vector2::Vector2(){
     this->x = 0;
     this->y = 0;
 }
+Vector2::Vector2(const Vector2Int& other) {
+    this->x = other.x;
+    this->y = other.y;
+}
 
 Vector2Int Vector2::round() const {
     return Vector2Int(
@@ -189,7 +193,8 @@ Vector2 Vector2::rotate(float angle) const {
 }
 // return the signed angle between 2 vectors
 float Vector2::signed_angle(const Vector2& other) const {
-    return std::atan2(other.y * this->x - other.x * this->y, other.x * this->x + other.y * this->y);
+    float angle = std::atan2(other.y * this->x - other.x * this->y, other.x * this->x + other.y * this->y);
+    return __max(-180, __min(angle, 180));
 }
 
 // return the vector with positive y as newUp
@@ -220,6 +225,10 @@ Vector2Int::Vector2Int(int x, int y){
 Vector2Int::Vector2Int(){
     this->x = 0;
     this->y = 0;
+}
+Vector2Int::Vector2Int(const Vector2& other) {
+    this->x = (int)other.x;
+    this->y = (int)other.y;
 }
 
 Vector2Int Vector2Int::operator+(const Vector2& other) const {

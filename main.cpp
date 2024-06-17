@@ -7,6 +7,8 @@
 #include "class/gameplay/general/world.h"
 
 int main(int argc, char *args[]) {
+    World::world_setup();
+
     TestShip* ship = new TestShip(Vector2(Graphics::screen.width / 2, Graphics::screen.height / 2));
     ship->free_object = true;
     World::object_renderers.push_back(&(ship->sprite_renderer));
@@ -49,7 +51,7 @@ int main(int argc, char *args[]) {
         double elapsed_seconds = elapsed_time.count();
         deltatime = elapsed_seconds;
 
-        std::cout << "fps: " << (1/deltatime) << "\r";
+        std::cout << "fps: " << (1/deltatime) << "                            \r";
     }
 
     World::release();

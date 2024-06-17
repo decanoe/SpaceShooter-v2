@@ -32,6 +32,7 @@ namespace World
 
     void update(float deltatime);
     void render();
+    void world_setup();
     void release();
 }
 

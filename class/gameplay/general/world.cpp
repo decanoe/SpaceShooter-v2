@@ -1,12 +1,18 @@
 #ifndef _WORLD
 
 #include "./world.h"
+#include "../effect/stars.h"
 
 unsigned int World::debug = DEBUG_ALL;
 float World::deltatime = 1.0/60;
 std::vector<ObjectRenderer*> World::object_renderers = std::vector<ObjectRenderer*>();
 std::vector<Updatable*> World::update_list = std::vector<Updatable*>();
 
+void World::world_setup() {
+    Stars* stars = new Stars(256);
+    stars->free_object = true;
+    World::object_renderers.push_back(stars);
+}
 void World::update(float deltatime) {
     World::deltatime = deltatime;
     for (Updatable* obj : World::update_list)

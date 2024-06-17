@@ -27,6 +27,8 @@ add_executable(${PROJECT_NAME} main.cpp
     class/gameplay/general/graphics.cpp
     
     class/gameplay/ship/test_ship.cpp
+
+    class/gameplay/effect/stars.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} SDL2 SDL2_image)

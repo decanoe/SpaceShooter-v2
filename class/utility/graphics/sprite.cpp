@@ -31,18 +31,23 @@ void Sprite::update_texture() {
     this->texture = SDL_CreateTextureFromSurface(Graphics::renderer, this->surface);
 }
 
-Sprite Sprite::copy(const Sprite& other, Vector2Int offset, Vector2Int size) {
+Sprite Sprite::copy(const Sprite& other) { return Sprite::copy(other, Vector2Int(0, 0), other.size, other.size); }
+Sprite Sprite::copy(const Sprite& other, Vector2Int new_size) { return Sprite::copy(other, Vector2Int(0, 0), other.size, new_size); }
+Sprite Sprite::copy(const Sprite& other, Vector2Int offset, Vector2Int size) { return Sprite::copy(other, offset, size, size); }
+Sprite Sprite::copy(const Sprite& other, Vector2Int offset, Vector2Int size, Vector2Int new_size) {
     Sprite sprite;
 
-    if (size.x == 0 || offset.x + size.x > other.size.x) size.x = other.size.x - offset.x;
-    if (size.y == 0 || offset.y + size.y > other.size.y) size.y = other.size.y - offset.y;
-    sprite.size = size;
+    sprite.size = new_size;
 
-    sprite.surface = SDL_CreateRGBSurface(0, size.x, size.y, other.surface->format->BitsPerPixel, 0, 0, 0, 0);
+    sprite.surface = SDL_CreateRGBSurface(0, new_size.x, new_size.y, other.surface->format->BitsPerPixel, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
+    SDL_BlendMode blend_mode;
+    SDL_GetSurfaceBlendMode(other.surface, &blend_mode);
+    SDL_SetSurfaceBlendMode(sprite.surface, blend_mode);
     
-    SDL_Rect src_rect = Rect(offset, sprite.size).to_sdl_rect();
+    SDL_Rect src_rect = Rect(offset, size).to_sdl_rect();
+    SDL_Rect dest_rect = Rect(Vector2Int(0, 0), new_size).to_sdl_rect();
 
-    if (SDL_BlitSurface(other.surface, &src_rect, sprite.surface, NULL) == -1) {
+    if (SDL_BlitScaled(other.surface, &src_rect, sprite.surface, &dest_rect) == -1) {
         std::cerr << "unable to blit image on copy: " << SDL_GetError() << "\n";
         exit(EXIT_FAILURE);
     }

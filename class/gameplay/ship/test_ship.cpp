@@ -6,15 +6,15 @@
 #define inv_lerp(a, b, x) __max(__min(((x) - (a)) / ((b) - (a)), 1), 0)
 
 #define MASS 500
-#define SPEED (256 * MASS)
+#define SPEED (512 * MASS)
 
 TestShip::TestShip(Vector2 position) {
     this->position = position;
 
-    this->rect_collider = RectCollider(this, Rect(32, 32).recenter());
+    this->rect_collider = RectCollider(this, Rect(64, 64).recenter());
     this->rigid_object = RigidObject(this, &this->rect_collider, MASS);
 
-    Sprite sprite = Sprite::copy(Graphics::sprite_sheet, Vector2Int(0, 32), Vector2Int(32, 32));
+    Sprite sprite = Sprite::copy(Graphics::sprite_sheet, Vector2Int(0, 32), Vector2Int(32, 32), Vector2Int(64, 64));
     sprite.name = "ship sprite";
     this->sprite_renderer = SpriteRenderer(this, sprite);
 }

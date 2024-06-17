@@ -19,7 +19,10 @@ public:
 
     void update_texture();
     void release();
-    static Sprite copy(const Sprite& other, Vector2Int offset = Vector2Int(), Vector2Int size = Vector2Int());
+    static Sprite copy(const Sprite& other);
+    static Sprite copy(const Sprite& other, Vector2Int new_size);
+    static Sprite copy(const Sprite& other, Vector2Int offset, Vector2Int size);
+    static Sprite copy(const Sprite& other, Vector2Int offset, Vector2Int size, Vector2Int new_size);
 
     void blit(Vector2Int position, float angle = 0, SDL_RendererFlip flip = SDL_RendererFlip::SDL_FLIP_NONE) const;
     Vector2Int get_size() const;

@@ -16,6 +16,7 @@ add_executable(${PROJECT_NAME} main.cpp
     class/utility/math/vector2.cpp
     class/utility/math/vector3.cpp
     class/utility/math/rect.cpp
+    class/utility/math/random_generator.cpp
 
     class/utility/physics/transform.cpp
     class/utility/physics/rigid_object.cpp
@@ -27,6 +28,7 @@ add_executable(${PROJECT_NAME} main.cpp
     class/gameplay/general/graphics.cpp
     
     class/gameplay/ship/test_ship.cpp
+    class/gameplay/objects/asteroid.cpp
 
     class/gameplay/effect/stars.cpp
 )

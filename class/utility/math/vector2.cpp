@@ -211,6 +211,9 @@ Vector2 Vector2::Lerp(const Vector2& v1, const Vector2& v2, float value) {
     return v1 + (v2 - v1) * value;
 }
 
+bool Vector2::operator<(const Vector2 &other) const {
+    return (this->x < other.x) || ((this->x == other.x) && (this->y < other.y));
+}
 std::string Vector2::to_str() const {
     return "Vector2(" + std::to_string(this->x) + ", " + std::to_string(this->y) + ")";
 }
@@ -354,6 +357,9 @@ float Vector2Int::sqrmagnitude() const {
     return this->x * this->x + this->y * this->y;
 }
 
+bool Vector2Int::operator<(const Vector2Int &other) const {
+    return (this->x < other.x) || ((this->x == other.x) && (this->y < other.y));
+}
 std::string Vector2Int::to_str() const {
     return "Vector2Int(" + std::to_string(this->x) + ", " + std::to_string(this->y) + ")";
 }

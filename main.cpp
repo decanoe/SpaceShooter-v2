@@ -9,12 +9,9 @@
 int main(int argc, char *args[]) {
     World::world_setup();
 
-    TestShip* ship = new TestShip(Vector2(Graphics::screen.width / 2, Graphics::screen.height / 2));
-    ship->free_object = true;
-    World::object_renderers.push_back(&(ship->sprite_renderer));
-    World::object_renderers.push_back(&(ship->rect_collider));
-    World::update_list.push_back(ship);
+    TestShip* ship = new TestShip(Vector2());
     World::world_center = ship;
+    ship->insert_to_world(true);
 
     bool loop = true;
     float deltatime = 0.001;
@@ -36,6 +33,10 @@ int main(int argc, char *args[]) {
                 {
                     case SDLK_ESCAPE:
                         loop = false;
+                        break;
+                    case SDLK_b:
+                        if (World::debug & DEBUG_COLLIDER) World::debug -= DEBUG_COLLIDER;
+                        else World::debug &= DEBUG_COLLIDER;
                         break;
                 }
                 break;

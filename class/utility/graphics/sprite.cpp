@@ -63,12 +63,12 @@ Sprite Sprite::copy(const Sprite& other, Vector2Int offset, Vector2Int size, Vec
     return sprite;
 }
 
-void Sprite::blit(Vector2Int position, float angle, SDL_RendererFlip flip) const {
+void Sprite::blit(Vector2 position, float angle, SDL_RendererFlip flip) const {
     if (this->texture == NULL) return;
 
-    SDL_Rect dest_rect = Rect(position, this->size).to_sdl_rect();
+    SDL_FRect dest_rect = Rect(position, (Vector2)this->size).to_sdl_frect();
 
-    SDL_RenderCopyEx(Graphics::renderer, this->texture, NULL, &dest_rect, -angle * 180 / PI, NULL, flip);
+    SDL_RenderCopyExF(Graphics::renderer, this->texture, NULL, &dest_rect, -angle * 180 / PI, NULL, flip);
 }
 Vector2Int Sprite::get_size() const {
     return this->size;

@@ -38,6 +38,8 @@ public:
 
     // returns a SDL representation of a rect
     SDL_Rect to_sdl_rect() const;
+    // returns a SDL representation of a float rect
+    SDL_FRect to_sdl_frect() const;
 
     // returns a string in the format "Rect(Vector2(x, y), Vector2(width, height))"
     std::string to_str() const;

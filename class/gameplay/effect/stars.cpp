@@ -2,8 +2,10 @@
 
 #include "./stars.h"
 #include "../../utility/math/rect.h"
+#include "../../utility/math/random_generator.h"
 
 Stars::Stars(int count) {
+    this->z_index = -1024;
     this->count = count;
     this->positions = new Vector2[this->count];
     this->distances = new float[this->count];
@@ -11,14 +13,12 @@ Stars::Stars(int count) {
 
     for (int i = 0; i < this->count; i++)
     {
-        float v = (float)std::rand() / (float)RAND_MAX;
+        float v = Random::get_float();
         this->distances[i] = 0.1 + (1 - v * v) * 0.9;
 
-        this->positions[i] = Vector2(
-            (float)std::rand() / (float)RAND_MAX * Graphics::screen.width,
-            (float)std::rand() / (float)RAND_MAX * Graphics::screen.height);
+        this->positions[i] = Random::get_vect2(Vector2(), Vector2(Graphics::screen.width, Graphics::screen.height));
         
-        this->thick[i] = ((float)std::rand() / (float)RAND_MAX) <= 0.25;
+        this->thick[i] = Random::get_bool(0.25);
     }
     
 }
@@ -36,10 +36,10 @@ void Stars::draw() const {
         SDL_SetRenderDrawColor(Graphics::screen.get_renderer(), r, g, b, SDL_ALPHA_OPAQUE);
 
         if (this->thick[i]) {
-            SDL_RenderDrawLine(Graphics::screen.get_renderer(), pos.x - 1, pos.y, pos.x + 1, pos.y);
-            SDL_RenderDrawLine(Graphics::screen.get_renderer(), pos.x, pos.y - 1, pos.x, pos.y + 1);
+            SDL_RenderDrawLineF(Graphics::screen.get_renderer(), pos.x - 1, pos.y, pos.x + 1, pos.y);
+            SDL_RenderDrawLineF(Graphics::screen.get_renderer(), pos.x, pos.y - 1, pos.x, pos.y + 1);
         }
-        else SDL_RenderDrawPoint(Graphics::screen.get_renderer(), pos.x, pos.y);
+        else SDL_RenderDrawPointF(Graphics::screen.get_renderer(), pos.x, pos.y);
     }
 }
 void Stars::release() {

@@ -24,7 +24,7 @@ public:
     static Sprite copy(const Sprite& other, Vector2Int offset, Vector2Int size);
     static Sprite copy(const Sprite& other, Vector2Int offset, Vector2Int size, Vector2Int new_size);
 
-    void blit(Vector2Int position, float angle = 0, SDL_RendererFlip flip = SDL_RendererFlip::SDL_FLIP_NONE) const;
+    void blit(Vector2 position, float angle = 0, SDL_RendererFlip flip = SDL_RendererFlip::SDL_FLIP_NONE) const;
     Vector2Int get_size() const;
 
     bool is_sprite() const;

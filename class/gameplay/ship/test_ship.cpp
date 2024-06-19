@@ -10,6 +10,7 @@
 
 TestShip::TestShip(Vector2 position) {
     this->position = position;
+    this->name = "test ship";
 
     this->rect_collider = RectCollider(this, Rect(64, 64).recenter());
     this->rigid_object = RigidObject(this, &this->rect_collider, MASS);
@@ -17,12 +18,28 @@ TestShip::TestShip(Vector2 position) {
     Sprite sprite = Sprite::copy(Graphics::sprite_sheet, Vector2Int(0, 32), Vector2Int(32, 32), Vector2Int(64, 64));
     sprite.name = "ship sprite";
     this->sprite_renderer = SpriteRenderer(this, sprite);
+    this->sprite_renderer.z_index = 100;
 }
 void TestShip::release() {
     this->sprite_renderer.release();
 }
 void TestShip::update() {
     this->rigid_object.update();
+    this->rigid_object.set_velocity(this->rigid_object.get_velocity() / (1 + World::deltatime));
+    this->rigid_object.set_angle_velocity(this->rigid_object.get_angle_velocity() / (1 + World::deltatime));
+}
+void TestShip::insert_to_world(bool free_object) {
+    this->free_object = free_object;
+    World::add_updatable(this, this->position);
+    World::add_object_renderer(&this->sprite_renderer, this->position);
+    World::add_object_renderer(&this->rect_collider, this->position);
+}
+void TestShip::change_chunk(Vector2Int previous_chunk_index) {
+    World::remove_updatable(this, previous_chunk_index);
+    World::remove_object_renderer(&this->sprite_renderer, previous_chunk_index);
+    World::remove_object_renderer(&this->rect_collider, previous_chunk_index);
+
+    this->insert_to_world(this->free_object);
 }
 
 void TestShip::manage_event(const SDL_Event& event) {

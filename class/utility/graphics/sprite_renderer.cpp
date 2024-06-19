@@ -11,7 +11,7 @@ void SpriteRenderer::release() {
 }
 
 void SpriteRenderer::draw() const {
-    this->sprite.blit(Graphics::world_to_screen(this->transform->position).round() - this->sprite.get_size() / 2, this->transform->angle);
+    this->sprite.blit(Graphics::world_to_screen(this->transform->position) - this->sprite.get_size() / 2, this->transform->angle);
 }
 
 std::string SpriteRenderer::to_str() const {

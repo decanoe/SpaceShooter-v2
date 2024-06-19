@@ -10,10 +10,8 @@ RigidObject::RigidObject(Transform* transform, Collider* collider, float mass) {
 
 void RigidObject::update() {
     this->transform->position += this->velocity * World::deltatime;
-    this->velocity /= 1 + World::deltatime;
 
     this->transform->angle += this->angle_velocity * World::deltatime;
-    this->angle_velocity /= 1 + World::deltatime;
 }
 
 void RigidObject::add_force(Vector2 force) {

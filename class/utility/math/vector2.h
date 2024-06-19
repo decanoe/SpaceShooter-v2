@@ -87,6 +87,8 @@ public:
     // return the interpolation of v1 and v2 with value
     static Vector2 Lerp(const Vector2& v1, const Vector2& v2, float value);
 
+    // first test the x coordinate and only test the y if this.x == other.x. Must be implemented to use Vector2 in maps
+    bool operator<(const Vector2 &other) const;
     std::string to_str() const;
 };
 
@@ -138,6 +140,8 @@ public:
     // return the squared length of the vector
     float sqrmagnitude() const;
 
+    // first test the x coordinate and only test the y if this.x == other.x. Must be implemented to use Vector2Int in maps
+    bool operator<(const Vector2Int &other) const;
     std::string to_str() const;
 };
 

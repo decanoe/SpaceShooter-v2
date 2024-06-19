@@ -103,6 +103,14 @@ SDL_Rect Rect::to_sdl_rect() const {
     rect.h = this->height;
     return rect;
 }
+SDL_FRect Rect::to_sdl_frect() const {
+    SDL_FRect rect;
+    rect.x = this->x;
+    rect.y = this->y;
+    rect.w = this->width;
+    rect.h = this->height;
+    return rect;
+}
 
 std::string Rect::to_str() const {
     return "Rect(" + this->position().to_str() + ", " + this->size().to_str() + ")";

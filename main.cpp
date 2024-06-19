@@ -15,6 +15,8 @@ int main(int argc, char *args[]) {
 
     bool loop = true;
     float deltatime = 0.001;
+    int nb_frames = 0;
+    double time_passed = 0;
     while (loop) {
         auto start = std::chrono::system_clock::now();
 
@@ -52,7 +54,15 @@ int main(int argc, char *args[]) {
         double elapsed_seconds = elapsed_time.count();
         deltatime = elapsed_seconds;
 
-        std::cout << "fps: " << (1/deltatime) << "                            \r";
+
+
+        time_passed += elapsed_seconds;
+        nb_frames++;
+        if (time_passed > 0.5) {
+            std::cout << "fps: " << (nb_frames/time_passed) << "                            \r";
+            nb_frames = 0;
+            time_passed = 0;
+        }
     }
 
     World::release();

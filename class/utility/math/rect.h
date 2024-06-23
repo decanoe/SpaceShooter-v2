@@ -33,6 +33,8 @@ public:
     bool contains(Vector2 point) const;
     // returns true if the given rect overlaps this one
     bool overlap(Rect rect) const;
+    // returns the intersection of the two rect
+    Rect intersection(const Rect& rect) const;
     // grows the rect in place to fit a given point and returns itself
     Rect& grow_to_fit(Vector2 position);
 

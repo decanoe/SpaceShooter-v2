@@ -6,16 +6,12 @@
 #include "./sprite.h"
 #include "./object_renderer.h"
 #include "../math/vector2.h"
-#include "../physics/transform.h"
 
 class SpriteRenderer: public ObjectRenderer
 {
-protected:
-    Transform* transform;
-    Sprite sprite;
 public:
+    Sprite sprite;
     SpriteRenderer(Transform* transform, Sprite sprite);
-    SpriteRenderer() {}
     void release() override;
 
     void draw() const override;

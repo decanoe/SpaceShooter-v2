@@ -1,11 +1,11 @@
-#ifndef _STARS_CLASS
-#define _STARS_CLASS
+#ifndef _STARS_RENDERER_CLASS
+#define _STARS_RENDERER_CLASS
 
 #include "SDL.h"
 #include "../../utility/graphics/object_renderer.h"
 #include "../general/graphics.h"
 
-class Stars: public ObjectRenderer
+class StarsRenderer: public ObjectRenderer
 {
 protected:
     Vector2* positions = nullptr;
@@ -13,7 +13,7 @@ protected:
     bool* thick = nullptr;
     int count = 0;
 public:
-    Stars(int count);
+    StarsRenderer(int count);
     void draw() const override;
     void release() override;
     std::string to_str() const override;

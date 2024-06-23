@@ -2,21 +2,25 @@
 #define _RIGID_OBJECT_CLASS
 
 #include "../math/vector2.h"
-#include "./transform.h"
+#include "../component/component.h"
 #include "./collider.h"
-#include "../updatable.h"
 
-class RigidObject: public Updatable
+namespace Physics {
+    enum PhysicsLayer {
+        Garbage, Terrain, Ship, None
+    };
+    bool do_collide(PhysicsLayer a, PhysicsLayer b);
+}
+
+class RigidObject: public Component
 {
 protected:
-    Transform* transform = nullptr;
-    Collider* collider = nullptr;
     Vector2 velocity = Vector2();
     float mass = 500;
     float angle_velocity = 0;
 public:
-    RigidObject(Transform* transform, Collider* collider, float mass = 500);
-    RigidObject() {}
+    Physics::PhysicsLayer layer = Physics::PhysicsLayer::None;
+    RigidObject(Transform* transform, float mass = 500, Physics::PhysicsLayer layer = Physics::PhysicsLayer::None);
     ~RigidObject() {}
 
     void update() override;

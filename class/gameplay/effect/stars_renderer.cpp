@@ -1,10 +1,10 @@
-#ifndef _STARS_CLASS
+#ifndef _STARS_RENDERER_CLASS
 
-#include "./stars.h"
+#include "./stars_renderer.h"
 #include "../../utility/math/rect.h"
 #include "../../utility/math/random_generator.h"
 
-Stars::Stars(int count) {
+StarsRenderer::StarsRenderer(int count): ObjectRenderer(nullptr) {
     this->z_index = -1024;
     this->count = count;
     this->positions = new Vector2[this->count];
@@ -22,7 +22,7 @@ Stars::Stars(int count) {
     }
     
 }
-void Stars::draw() const {
+void StarsRenderer::draw() const {
     for (int i = 0; i < this->count; i++)
     {
         Vector2 pos = this->positions[i] - World::get_world_center() * this->distances[i];
@@ -42,7 +42,7 @@ void Stars::draw() const {
         else SDL_RenderDrawPointF(Graphics::screen.get_renderer(), pos.x, pos.y);
     }
 }
-void Stars::release() {
+void StarsRenderer::release() {
     if (this->positions != nullptr) delete this->positions;
     if (this->distances != nullptr) delete this->distances;
 
@@ -50,7 +50,7 @@ void Stars::release() {
     this->distances = nullptr;
     this->count = 0;
 }
-std::string Stars::to_str() const {
+std::string StarsRenderer::to_str() const {
     return "STARS(nb: " + std::to_string(this->count) + ")";
 }
 

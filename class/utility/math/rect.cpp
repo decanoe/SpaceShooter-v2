@@ -73,6 +73,19 @@ bool Rect::contains(Vector2 point) const {
         && point.y >= this->y
         && point.y <= this->y - this->height;
 }
+Rect Rect::intersection(const Rect& rect) const {
+    Vector2 p1;
+    Vector2 p2;
+    for (int x: {0, 1})
+    for (int y: {0, 1})
+    {
+        if (rect.contains(Vector2(this->x + x * this->width, this->y + y * this->height)))
+            p1 = Vector2(this->x + x * this->width, this->y + y * this->height);
+        if (this->contains(Vector2(rect.x + x * rect.width, rect.y + y * rect.height)))
+            p2 = Vector2(rect.x + x * rect.width, rect.y + y * rect.height);
+    }
+    return Rect(__min(p1.x, p2.x), __min(p1.y, p2.y), std::abs(p1.x - p2.x), std::abs(p1.y - p2.y));
+}
 bool Rect::overlap(Rect rect) const {
     return this->x < rect.x + rect.width
         && this->x + this->width > rect.x

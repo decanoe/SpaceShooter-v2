@@ -2,16 +2,36 @@
 
 #include "./rigid_object.h"
 
-RigidObject::RigidObject(Transform* transform, Collider* collider, float mass) {
-    this->transform = transform;
-    this->collider = collider;
+bool Physics::do_collide(PhysicsLayer a, PhysicsLayer b) {
+    switch (a)
+    {
+    case Physics::PhysicsLayer::Garbage:
+        switch (b)
+        {
+            case Physics::PhysicsLayer::Garbage: return false;
+            case Physics::PhysicsLayer::Terrain: return false;
+        }
+        break;
+    case Physics::PhysicsLayer::Terrain:
+        switch (b)
+        {
+            case Physics::PhysicsLayer::Garbage: return false;
+            case Physics::PhysicsLayer::Terrain: return false;
+        }
+        break;
+    }
+
+    return true;
+}
+
+RigidObject::RigidObject(Transform* transform, float mass, Physics::PhysicsLayer layer): Component(transform) {
+    this->layer = layer;
     this->mass = mass;
 }
 
 void RigidObject::update() {
-    this->transform->position += this->velocity * World::deltatime;
-
-    this->transform->angle += this->angle_velocity * World::deltatime;
+    this->transform->set_global_pos(this->transform->global_position() + this->velocity * World::deltatime);
+    this->transform->local_angle += this->angle_velocity * World::deltatime;
 }
 
 void RigidObject::add_force(Vector2 force) {

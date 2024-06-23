@@ -14,7 +14,7 @@ int Random::get_int(int min, int max) {
 Vector2 Random::get_vect2(Vector2 min, Vector2 max) {
     return Vector2(Random::get_float(min.x, max.x), Random::get_float(min.y, max.y));
 }
-// generate a random vector in the disk or radius <radius> centered on <center>
+// generate a random vector in the disk of radius <radius> centered on <center>
 Vector2 Random::get_vect2_in_circle(Vector2 center, float radius) {
     return center + Vector2::from_angle(Random::get_float(0, 2*PI)) * radius * std::sqrt(Random::get_float());
 }

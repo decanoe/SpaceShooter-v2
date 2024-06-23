@@ -11,12 +11,13 @@ int main(int argc, char *args[]) {
 
     TestShip* ship = new TestShip(Vector2());
     World::world_center = ship;
-    ship->insert_to_world(true);
+    World::add_object(ship);
 
     bool loop = true;
     float deltatime = 0.001;
     int nb_frames = 0;
     double time_passed = 0;
+    double peak = 1.0 / 1024;
     while (loop) {
         auto start = std::chrono::system_clock::now();
 
@@ -38,7 +39,11 @@ int main(int argc, char *args[]) {
                         break;
                     case SDLK_b:
                         if (World::debug & DEBUG_COLLIDER) World::debug -= DEBUG_COLLIDER;
-                        else World::debug &= DEBUG_COLLIDER;
+                        else World::debug += DEBUG_COLLIDER;
+                        break;
+                    case SDLK_c:
+                        if (World::debug & DEBUG_CHUNK) World::debug -= DEBUG_CHUNK;
+                        else World::debug += DEBUG_CHUNK;
                         break;
                 }
                 break;
@@ -55,13 +60,14 @@ int main(int argc, char *args[]) {
         deltatime = elapsed_seconds;
 
 
-
+        peak = __max(peak, elapsed_seconds);
         time_passed += elapsed_seconds;
         nb_frames++;
         if (time_passed > 0.5) {
-            std::cout << "fps: " << (nb_frames/time_passed) << "                            \r";
+            std::cout << "fps: " << (nb_frames/time_passed) << " \t|\t peak: " << (1 / peak) << "                            \r";
             nb_frames = 0;
             time_passed = 0;
+            peak = time_passed / nb_frames;
         }
     }
 

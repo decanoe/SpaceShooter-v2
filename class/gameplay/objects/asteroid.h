@@ -6,19 +6,11 @@
 #include "../../utility/graphics/sprite_renderer.h"
 #include "../general/graphics.h"
 
-class Asteroid: public Updatable
+class Asteroid: public Transform
 {
 protected:
 public:
-    RectCollider rect_collider;
-    RigidObject rigid_object;
-    SpriteRenderer sprite_renderer;
-    Asteroid();
-
-    void update() override;
-    void release() override;
-    void insert_to_world(bool free_object) override;
-    void change_chunk(Vector2Int previous_chunk_index) override;
+    Asteroid(Transform* parent = nullptr);
 };
 
 #endif

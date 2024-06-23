@@ -7,18 +7,13 @@
 #include "../../utility/graphics/sprite_renderer.h"
 #include "../general/graphics.h"
 
-class TestShip: public Updatable
+class TestShip: public Transform
 {
 protected:
 public:
-    RectCollider rect_collider;
-    RigidObject rigid_object;
-    SpriteRenderer sprite_renderer;
+    RigidObject* rigid_object;
     TestShip(Vector2 position);
     void update() override;
-    void release() override;
-    void insert_to_world(bool free_object) override;
-    void change_chunk(Vector2Int previous_chunk_index) override;
 
     void manage_event(const SDL_Event& e);
     void manage_continuous_event();
